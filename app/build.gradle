@@ -1,0 +1,63 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "spy.gra.com.spysms"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:design:25.1.1'
+
+    // Required for local unit tests (JUnit 4 framework)
+    testCompile 'junit:junit:4.12'
+
+    // Required for instrumented tests
+    androidTestCompile 'com.android.support:support-annotations:25.1.1'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+
+    // Roboelectric
+    testCompile "org.robolectric:robolectric:3.2.2"
+
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+
+    // Dependencies for local unit tests
+    testCompile "junit:junit:$rootProject.ext.junitVersion"
+    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
+    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
+    testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.junit4"
+    testCompile "org.powermock:powermock-api-mockito2:$rootProject.ext.apiimockitor2"
+}
+
+/*
+All direct/transitive dependencies shared between your test and production APKs need to be
+excluded from the test APK! This is necessary because both APKs will contain the same classes. Not
+excluding these dependencies from your test configuration will result in an dex pre-verifier error
+at runtime. More info in this tools bug: (https://code.google.com/p/android/issues/detail?id=192497)
+*/
+configurations.compile.dependencies.each { compileDependency ->
+    println "Excluding compile dependency: ${compileDependency.getName()}"
+    configurations.androidTestCompile.dependencies.each { androidTestCompileDependency ->
+        configurations.androidTestCompile.exclude module: "${compileDependency.getName()}"
+    }
+}

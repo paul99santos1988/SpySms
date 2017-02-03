@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Spy Sms</string>
+    <string name="large_text">
+        <![CDATA[
+         "About this application:\n\n"
+
+        "This is a proof of concept to see how a developer can get Sms number and content."
+
+        "\n\nHow it works:\n\n"
+
+        "If the Android version on your phone is 19 or higher all the sms"
+        "that you will receive will be caught just before and shown in a Toast/Snackbar/Dialog message"
+        "that will appear on the phone screen no matter where you are at that moment."
+
+        "\n\nAbout me:\n\n"
+
+        "For work history, please check my LinkedIn profile: https://www.linkedin.com/in/radugabriela"
+        "If you want to expand this app, or you have a different app proposal, feel free to contact me with more details."
+        "Just click on email icon and start typing the message."
+        ]]>
+
+    </string>
+    <string name="action_settings">Settings</string>
+</resources>
