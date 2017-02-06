@@ -7,6 +7,7 @@ import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,5 +55,10 @@ public class SmsInstrumentedTest {
     public void servicesStartedOnInit() throws TimeoutException {
         context.startService(new Intent(context, SmsService.class));
         assertTrue(SmsService.started);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        Intents.release();
     }
 }
