@@ -12,11 +12,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.concurrent.TimeoutException;
+
+import spy.gra.com.spysms.service.SmsService;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.equalTo;
 
 
@@ -43,5 +48,11 @@ public class SmsInstrumentedTest {
     public void clickingFab_shouldStartEmailClient() {
         onView(withId(R.id.fab)).perform(click());
         intended(hasAction(equalTo(Intent.CATEGORY_APP_EMAIL)));
+    }
+
+    @Test
+    public void servicesStartedOnInit() throws TimeoutException {
+        context.startService(new Intent(context, SmsService.class));
+        assertTrue(SmsService.started);
     }
 }

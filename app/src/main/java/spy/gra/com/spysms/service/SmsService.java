@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.annotation.RestrictTo;
 
 /**
  * Service that is alive as long as the kernel wants to
@@ -17,6 +18,8 @@ public class SmsService extends Service {
     private ContentResolver contentResolver;
     private Uri uri = Uri.parse("content://sms/sent");
     private Handler handler;
+    @RestrictTo(RestrictTo.Scope.TESTS)
+    public static boolean started;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -26,6 +29,7 @@ public class SmsService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        started = true;
         contentResolver = getContentResolver();
         contentResolver.registerContentObserver(uri, true, new contentObserver(handler));
     }
